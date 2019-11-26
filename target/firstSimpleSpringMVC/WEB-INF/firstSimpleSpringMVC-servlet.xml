@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+         <property name="messageConverters">
+             <list>
+                 <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                     <property name="supportedMediaTypes">
+                         <list>
+                             <value>text/html; charset=UTF-8</value>
+                             <value>application/json;charset=UTF-8</value>
+                         </list>
+                     </property>
+                 </bean>
+                 <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+                     <property name="supportedMediaTypes">
+                         <list>
+                             <value>text/html; charset=UTF-8</value>
+                             <value>application/json;charset=UTF-8</value>
+                         </list>
+                     </property>
+                 </bean>
+             </list>
+         </property>
+    </bean>
+
+    <context:component-scan base-package="com.test.davy.controller"/>
+
+    <!-- 视图模式配置,velocity配置文件-->
+    <bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+
+        <property name="resourceLoaderPath" value="/WEB-INF/pages" />
+        <property name="configLocation" value="classpath:velocity.properties" />
+    </bean>
+
+    <!-- 配置后缀 -->
+    <bean id="velocityViewResolver" class="org.springframework.web.servlet.view.velocity.VelocityViewResolver">
+
+        <property name= "prefix" value= "/screen/"/>
+        <property name="suffix" value=".vm" />
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml"/>
+
+    </bean>
+
+
+
+
+</beans>
